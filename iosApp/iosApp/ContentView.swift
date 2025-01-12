@@ -4,7 +4,6 @@ import Shared
 struct ContentView: View {
     @State private var viewModel: FeedViewModel = KoinKt.getFeedViewModel()
     
-    
     var body: some View {
         VStack {
             Observing(viewModel.stateFlow) { uiState in
@@ -21,10 +20,10 @@ struct ContentView: View {
                         })
                     }
                 case let success as MovieListUiState.Success:
-                    if let firstFeed = success.result.first?.feeds.first {
-                        Text(firstFeed.name)
-                    } else {
-                        Text("No data")
+                    List {
+                        ForEach(success.result, id: \.self) { collection in
+                            TMDbRow(categoryName: collection.sortTypeStringDesc.resolve(), items: collection.feeds)
+                        }
                     }
                 default:
                     Text("Unknown state")

@@ -14,7 +14,7 @@ import org.example.tmdb.utils.getHighestRateText
 import org.example.tmdb.utils.getPopularText
 import org.example.tmdb.utils.getTrendingText
 
-abstract class BaseFeedRepository(private val ioDispatcher: CoroutineDispatcher) :
+abstract class BaseFeedRepository(ioDispatcher: CoroutineDispatcher) :
     BaseRepository<List<FeedWrapper>>(ioDispatcher) {
 
     protected abstract suspend fun popularItems(): List<Movie>

@@ -23,14 +23,12 @@ abstract class BaseRepository<T>(private val ioDispatcher: CoroutineDispatcher) 
             emit(Async.Success(getSuccessResult(id)))
         } catch (e: IOException) {
             emit(Async.Error(getNetworkFailed()))
-            throw e
         } catch (e: ClientRequestException) {
             emit(Async.Error(getRequestFailed()))
         } catch (e: ServerResponseException) {
             emit(Async.Error(getServerFailed()))
         } catch (e: Exception) {
             emit(Async.Error(getUnexpectedError()))
-            throw e
         }
     }.flowOn(ioDispatcher)
 }

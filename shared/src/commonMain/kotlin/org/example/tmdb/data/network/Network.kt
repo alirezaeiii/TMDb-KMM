@@ -43,9 +43,6 @@ val ktorModule = module {
                 }
                 level = LogLevel.ALL
             }
-            install(HttpTimeout) {
-                requestTimeoutMillis = 50000
-            }
             install(ContentNegotiation) {
                 json(get())
             }
