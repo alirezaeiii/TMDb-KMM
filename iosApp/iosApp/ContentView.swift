@@ -24,7 +24,7 @@ struct ContentView: View {
                         ForEach(success.result, id: \.self) { collection in
                             TMDbRow(categoryName: collection.sortTypeStringDesc.resolve(), items: collection.feeds)
                         }
-                    }
+                    }.listStyle(.inset)
                 default:
                     Text("Unknown state")
                 }

@@ -31,6 +31,8 @@ struct TMDbItem: View {
                 }
                 Text(movie.name)
                     .font(.caption)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: Constants.frameWidth)
             } else {
                 placeHolder
             }
