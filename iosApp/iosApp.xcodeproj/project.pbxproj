@@ -13,6 +13,7 @@
 		41E019712D34671B001D50B2 /* TMDbItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E019702D34671B001D50B2 /* TMDbItem.swift */; };
 		41E019742D346799001D50B2 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 41E019732D346799001D50B2 /* SDWebImageSwiftUI */; };
 		41E019762D346943001D50B2 /* TMDbRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E019752D346943001D50B2 /* TMDbRow.swift */; };
+		41E019782D347EB6001D50B2 /* RetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E019772D347EB6001D50B2 /* RetryView.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +23,7 @@
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		41E019702D34671B001D50B2 /* TMDbItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDbItem.swift; sourceTree = "<group>"; };
 		41E019752D346943001D50B2 /* TMDbRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDbRow.swift; sourceTree = "<group>"; };
+		41E019772D347EB6001D50B2 /* RetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryView.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* TMDb-KMM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDb-KMM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				41E019702D34671B001D50B2 /* TMDbItem.swift */,
 				41E019752D346943001D50B2 /* TMDbRow.swift */,
+				41E019772D347EB6001D50B2 /* RetryView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				41E019712D34671B001D50B2 /* TMDbItem.swift in Sources */,
+				41E019782D347EB6001D50B2 /* RetryView.swift in Sources */,
 				41E019762D346943001D50B2 /* TMDbRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,14 +11,7 @@ struct ContentView: View {
                 case is MovieListUiState.Loading:
                     ProgressView()
                 case let error as MovieListUiState.Error:
-                    VStack(spacing: 20) {
-                        Text(error.message)
-                        Button(action: {
-                            viewModel.refresh()
-                        }, label: {
-                            Text("Retry")
-                        })
-                    }
+                    RetryView(message: error.message, retry: viewModel.refresh)
                 case let success as MovieListUiState.Success:
                     List {
                         ForEach(success.result, id: \.self) { collection in
