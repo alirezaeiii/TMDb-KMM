@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="network_failed">Network failed. Check your connection.</string>
+    <string name="request_failed">The requested data couldn't be found.</string>
+    <string name="sever_failed">Something went wrong on our servers.</string>
+    <string name="unexpected_error">An unexpected error occurred.</string>
+    <string name="text_trending">Trending</string>
+    <string name="text_popular">Popular</string>
+    <string name="text_highest_rate">Top Rated</string>
+    <string name="text_discover">Discover</string>
+    <string name="text_now_playing">Now Playing</string>
+    <string name="text_upcoming">Upcoming</string>
+</resources>
