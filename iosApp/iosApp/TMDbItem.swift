@@ -27,8 +27,8 @@ struct TMDbItem: View {
         let placeHolder = shape.foregroundColor(.secondary)
             .frame(width: width, height: Constants.frameHeight)
         return VStack(alignment: .leading) {
-            if let posterPath = imageUrl{
-                WebImage(url: URL(string: String(format: posterPath))) { image in
+            if let posterUrl = imageUrl {
+                WebImage(url: URL(string: String(format: posterUrl))) { image in
                     image
                         .resizable()
                         .frame(width: width, height: Constants.frameHeight)
