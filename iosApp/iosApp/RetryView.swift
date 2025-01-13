@@ -6,8 +6,8 @@
 //  Copyright © 2025 orgName. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
+import Shared
 
 struct RetryView: View {
     let message: String
@@ -19,7 +19,7 @@ struct RetryView: View {
             Button(action: {
                 retry()
             }, label: {
-                Text("Retry")
+                Text(getRetryText())
             })
         }
     }

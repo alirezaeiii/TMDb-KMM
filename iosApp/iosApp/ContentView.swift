@@ -20,7 +20,7 @@ struct ContentView: View {
                         }
                     }.listStyle(.inset)
                 default:
-                    Text("Unknown state")
+                    fatalError("Unhandled state: \(uiState)")
                 }
             }
             

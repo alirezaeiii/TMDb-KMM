@@ -37,13 +37,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import org.example.tmdb.common.TMDbTopBar
 import org.example.tmdb.domain.model.FeedWrapper
 import org.example.tmdb.domain.model.Movie
 import org.example.tmdb.theme.Teal200
+import org.example.tmdb.utils.Dimens.TMDb_10_dp
+import org.example.tmdb.utils.Dimens.TMDb_120_dp
+import org.example.tmdb.utils.Dimens.TMDb_12_dp
+import org.example.tmdb.utils.Dimens.TMDb_16_dp
+import org.example.tmdb.utils.Dimens.TMDb_180_dp
+import org.example.tmdb.utils.Dimens.TMDb_20_dp
+import org.example.tmdb.utils.Dimens.TMDb_220_dp
+import org.example.tmdb.utils.Dimens.TMDb_2_dp
+import org.example.tmdb.utils.Dimens.TMDb_32_dp
+import org.example.tmdb.utils.Dimens.TMDb_36_dp
+import org.example.tmdb.utils.Dimens.TMDb_4_dp
+import org.example.tmdb.utils.Dimens.TMDb_6_dp
+import org.example.tmdb.utils.getMoreItemText
 import org.example.tmdb.utils.pagerTransition
 import org.example.tmdb.utils.resolve
 
@@ -84,7 +96,7 @@ private fun PagerTMDbItemContainer(item: FeedWrapper, modifier: Modifier = Modif
     Header(title = item.sortTypeStringDesc.resolve(), modifier = modifier)
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        contentPadding = PaddingValues(horizontal = TMDb_16_dp),
     ) { page ->
         with(item.feeds[page]) {
             TrendingItem(
@@ -100,7 +112,7 @@ private fun PagerTMDbItemContainer(item: FeedWrapper, modifier: Modifier = Modif
         }
     }
 
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(TMDb_20_dp))
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
@@ -111,10 +123,10 @@ private fun PagerTMDbItemContainer(item: FeedWrapper, modifier: Modifier = Modif
             Box(
                 modifier =
                 Modifier
-                    .padding(4.dp)
+                    .padding(TMDb_4_dp)
                     .clip(CircleShape)
                     .background(color)
-                    .size(6.dp),
+                    .size(TMDb_6_dp),
             )
         }
     }
@@ -131,8 +143,8 @@ private fun TrendingItem(
         modifier =
         modifier
             .fillMaxWidth()
-            .height(180.dp)
-            .clip(RoundedCornerShape(10.dp))
+            .height(TMDb_180_dp)
+            .clip(RoundedCornerShape(TMDb_10_dp))
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -146,8 +158,8 @@ private fun TrendingItem(
                 modifier =
                 Modifier
                     .padding(
-                        start = 12.dp,
-                        bottom = 6.dp,
+                        start = TMDb_12_dp,
+                        bottom = TMDb_6_dp,
                     )
                     .align(Alignment.BottomStart),
             ) {
@@ -156,7 +168,7 @@ private fun TrendingItem(
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                 )
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(TMDb_6_dp))
                 releaseDate?.let { releaseDate ->
                     Text(
                         text = releaseDate,
@@ -174,7 +186,7 @@ private fun FeedCollection(
     index: Int,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(top = 32.dp)) {
+    Column(modifier = modifier.padding(top = TMDb_32_dp)) {
         Header(title = feedCollection.sortTypeStringDesc.resolve())
         Feeds(feedCollection.feeds, index)
     }
@@ -186,8 +198,8 @@ private fun Header(title: String, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         modifier =
         modifier
-            .heightIn(min = 36.dp)
-            .padding(start = 12.dp),
+            .heightIn(min = TMDb_36_dp)
+            .padding(start = TMDb_12_dp),
     ) {
         Text(
             text = title,
@@ -199,12 +211,12 @@ private fun Header(title: String, modifier: Modifier = Modifier) {
                 .wrapContentWidth(Alignment.Start),
         )
         Text(
-            text = "More",
+            text = getMoreItemText(),
             color = MaterialTheme.colors.onSurface,
             modifier =
             Modifier
                 .align(Alignment.CenterVertically)
-                .padding(12.dp)
+                .padding(TMDb_12_dp)
         )
     }
 }
@@ -213,39 +225,29 @@ private fun Header(title: String, modifier: Modifier = Modifier) {
 private fun Feeds(feeds: List<Movie>, index: Int, modifier: Modifier = Modifier) {
     LazyRow(
         modifier = modifier,
-        contentPadding = PaddingValues(start = 2.dp, end = 2.dp),
+        contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
     ) {
         items(feeds) { feed ->
-            TMDbItem(feed, index)
+            if (index % 3 == 0) {
+                TMDbCard(feed, feed.backdropPath, TMDb_220_dp)
+            } else {
+                TMDbCard(feed, feed.posterPath, TMDb_120_dp)
+            }
         }
     }
 }
 
 @Composable
-fun TMDbItem(movie: Movie, index: Int) {
-    val itemWidth: Dp
-    val imageUrl: String?
-    if (index % 3 == 0) {
-        itemWidth = 220.dp
-        imageUrl = movie.backdropPath
-    } else {
-        itemWidth = 120.dp
-        imageUrl = movie.posterPath
-    }
-    TMDbCard(movie, imageUrl, itemWidth)
-}
-
-@Composable
 fun TMDbCard(
     movie: Movie,
-    imageUrl: String? = movie.posterPath,
-    itemWidth: Dp = 120.dp,
+    imageUrl: String?,
+    itemWidth: Dp
 ) {
     Card(
         modifier =
         Modifier
-            .padding(6.dp),
-        shape = RoundedCornerShape(10.dp),
+            .padding(TMDb_6_dp),
+        shape = RoundedCornerShape(TMDb_10_dp),
     ) {
         Column {
             AsyncImage(
@@ -253,7 +255,7 @@ fun TMDbCard(
                 contentDescription = movie.name,
                 modifier =
                 Modifier
-                    .size(width = itemWidth, height = 180.dp),
+                    .size(width = itemWidth, height = TMDb_180_dp),
                 contentScale = ContentScale.Crop,
             )
             Text(
@@ -265,7 +267,7 @@ fun TMDbCard(
                 overflow = TextOverflow.Ellipsis,
                 modifier =
                 Modifier
-                    .size(width = itemWidth, height = 36.dp)
+                    .size(width = itemWidth, height = TMDb_36_dp)
                     .wrapContentHeight(),
             )
         }

@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.tmdb.utils.getRetryText
 
 @Composable
 fun ErrorScreen(message: String, refresh: () -> Unit) {
@@ -34,7 +35,7 @@ fun ErrorScreen(message: String, refresh: () -> Unit) {
             )
         ) {
             Text(
-                text = "Retry"
+                text = getRetryText()
             )
         }
     }

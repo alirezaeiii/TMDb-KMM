@@ -6,10 +6,8 @@
 //  Copyright © 2025 orgName. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 import Shared
-
 
 struct TMDbRow: View {
     var categoryName: String

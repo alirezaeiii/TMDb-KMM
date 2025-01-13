@@ -23,3 +23,7 @@ fun getDiscoverText() = StringDesc.Resource(MR.strings.text_discover)
 fun getNowPlayingText() = StringDesc.Resource(MR.strings.text_now_playing)
 
 fun getUpcomingText() = StringDesc.Resource(MR.strings.text_upcoming)
+
+fun getMoreItemText() = StringDesc.Resource(MR.strings.more_item).resolve()
+
+fun getRetryText() = StringDesc.Resource(MR.strings.retry).resolve()

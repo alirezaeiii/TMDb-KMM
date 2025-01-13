@@ -6,11 +6,9 @@
 //  Copyright © 2025 orgName. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 import Shared
 import SDWebImageSwiftUI
-
 
 struct TMDbItem: View {
     var movie: Movie
