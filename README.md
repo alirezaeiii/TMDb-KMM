@@ -32,6 +32,7 @@ TMDB_API_KEY=YOUR_API_KEY
 * [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow) - is a state-holder observable flow that emits the current and new state updates to its collectors.
 * [Coil-compose](https://coil-kt.github.io/coil/compose/) - An image loading library for Android backed by Kotlin Coroutines.
 * [Material3 CenterAlignedTopAppBar](https://developer.android.com/develop/ui/compose/components/app-bars) - Provides access to key tasks and information. Generally hosts a title, core action items, and certain navigation items.
+* [SKIE](https://github.com/touchlab/SKIE) - A tool for Kotlin Multiplatform development that enhances the Swift API published from Kotlin.
 * [moko-resources](https://github.com/icerockdev/moko-resources) - provides access to the resources on macOS, iOS, Android the JVM and JS/Browser with the support of the default system localization.
 * [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) - BuildConfig for Kotlin Multiplatform Project.
 * [Napier](https://github.com/AAkira/Napier) - logger library for Kotlin Multiplatform project.
