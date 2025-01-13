@@ -30,11 +30,13 @@ class FeedViewModel(
     fun refresh() {
         viewModelScope.launch {
             repository.getResult().collect { uiState ->
-                when (uiState) {
-                    is Async.Loading -> _stateFlow.tryEmit(MovieListUiState.Loading)
-                    is Async.Error -> _stateFlow.tryEmit(MovieListUiState.Error(uiState.message))
-                    is Async.Success -> _stateFlow.tryEmit(MovieListUiState.Success(uiState.data))
-                }
+                _stateFlow.tryEmit(
+                    when (uiState) {
+                        is Async.Loading -> MovieListUiState.Loading
+                        is Async.Error -> MovieListUiState.Error(uiState.message)
+                        is Async.Success -> MovieListUiState.Success(uiState.data)
+                    }
+                )
             }
         }
     }

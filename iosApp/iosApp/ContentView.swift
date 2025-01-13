@@ -14,8 +14,9 @@ struct ContentView: View {
                     RetryView(message: error.message, retry: viewModel.refresh)
                 case let success as MovieListUiState.Success:
                     List {
-                        ForEach(success.result, id: \.self) { collection in
-                            TMDbRow(categoryName: collection.sortTypeStringDesc.resolve(), items: collection.feeds)
+                        ForEach(Array(success.result.enumerated()), id: \.1) { index, collection in
+                            TMDbRow(categoryName: collection.sortTypeStringDesc.resolve(), items: collection.feeds,
+                                    index: index)
                         }
                     }.listStyle(.inset)
                 default:

@@ -14,6 +14,7 @@ import Shared
 struct TMDbRow: View {
     var categoryName: String
     var items: [Movie]
+    var index: Int
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,7 +27,7 @@ struct TMDbRow: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 0) {
                     ForEach(items, id: \.self.id) { movie in
-                        TMDbItem(movie: movie)
+                        TMDbItem(movie: movie, index: index)
                     }
                 }
             }
@@ -44,6 +45,7 @@ struct TMDbRow: View {
     let movie = Movie(id: 1, overview: "", releaseDate: nil, posterPath: nil, backdropPath: nil, name: "name", voteAverage: 1, voteCount: 1)
     return TMDbRow(
         categoryName: "Trending",
-        items: [movie]
+        items: [movie],
+        index: 1
     )
 }
