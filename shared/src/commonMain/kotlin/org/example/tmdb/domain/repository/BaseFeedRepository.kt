@@ -54,7 +54,7 @@ abstract class BaseFeedRepository(
             if (dbMovies.isEmpty()) {
                 emitUpdatedMovies()
             } else {
-                emit(Async.Success(getFeedWrappers(database.getAllMovies())))
+                emit(Async.Success(getFeedWrappers(dbMovies)))
                 emitUpdatedMovies()
             }
         } catch (e: IOException) {
