@@ -22,6 +22,7 @@ CREATE TABLE MovieTable (
 );
 
 CREATE INDEX MovieTable_order_index ON MovieTable(order_index);
+CREATE INDEX MovieTable_parent_order_index ON MovieTable(parent_id, order_index);
 
 selectParentsOrdered:
 SELECT id
