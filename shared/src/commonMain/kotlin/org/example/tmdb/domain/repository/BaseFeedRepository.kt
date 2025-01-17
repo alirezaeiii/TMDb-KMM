@@ -1,6 +1,7 @@
 package org.example.tmdb.domain.repository
 
 import dev.icerock.moko.resources.desc.StringDesc
+import io.github.aakira.napier.Napier
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -49,23 +50,27 @@ abstract class BaseFeedRepository(
 
     fun getResult(): Flow<Async<List<FeedWrapper>>> = flow {
         emit(Async.Loading)
-        try {
             val dbMovies = database.getAllMovies()
             if (dbMovies.isEmpty()) {
-                emitUpdatedMovies()
+                try {
+                    emitUpdatedMovies()
+                } catch (e: IOException) {
+                    emit(Async.Error(getNetworkFailed()))
+                } catch (e: ClientRequestException) {
+                    emit(Async.Error(getRequestFailed()))
+                } catch (e: ServerResponseException) {
+                    emit(Async.Error(getServerFailed()))
+                } catch (e: Exception) {
+                    emit(Async.Error(getUnexpectedError()))
+                }
             } else {
                 emit(Async.Success(getFeedWrappers(dbMovies)))
-                emitUpdatedMovies()
+                try {
+                    emitUpdatedMovies()
+                } catch (t: Throwable) {
+                    Napier.e("Network failed", t)
+                }
             }
-        } catch (e: IOException) {
-            emit(Async.Error(getNetworkFailed()))
-        } catch (e: ClientRequestException) {
-            emit(Async.Error(getRequestFailed()))
-        } catch (e: ServerResponseException) {
-            emit(Async.Error(getServerFailed()))
-        } catch (e: Exception) {
-            emit(Async.Error(getUnexpectedError()))
-        }
     }.flowOn(ioDispatcher)
 
     private suspend fun FlowCollector<Async.Success<List<FeedWrapper>>>.emitUpdatedMovies() {
