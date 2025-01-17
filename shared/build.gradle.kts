@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.buildKonfig)
     alias(libs.plugins.skie)
     alias(libs.plugins.multiplatformResources)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -34,6 +35,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.android.driver)
         }
 
         commonMain.dependencies {
@@ -58,6 +60,7 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.native.driver)
         }
 
         all {
@@ -97,4 +100,12 @@ skie {
 
 multiplatformResources {
     resourcesPackage.set("org.example.tmdb")
+}
+
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("org.example.tmdb.cache")
+        }
+    }
 }

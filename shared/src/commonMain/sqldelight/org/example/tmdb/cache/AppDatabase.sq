@@ -1,0 +1,54 @@
+
+CREATE TABLE ParentTable (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    order_index INTEGER NOT NULL
+);
+
+
+CREATE INDEX ParentTable_order_index ON ParentTable(order_index);
+
+CREATE TABLE MovieTable (
+    id INTEGER NOT NULL,
+    overview TEXT NOT NULL,
+    releaseDate TEXT,
+    posterPath TEXT,
+    backdropPath TEXT,
+    name TEXT NOT NULL,
+    voteAverage REAL NOT NULL,
+    voteCount INTEGER NOT NULL,
+    order_index INTEGER NOT NULL,
+    parent_id INTEGER NOT NULL,
+    FOREIGN KEY (parent_id) REFERENCES ParentTable(id)
+);
+
+CREATE INDEX MovieTable_order_index ON MovieTable(order_index);
+
+selectParentsOrdered:
+SELECT id
+FROM ParentTable
+ORDER BY order_index ASC;
+
+selectParentId:
+SELECT id
+FROM ParentTable
+WHERE order_index = ?;
+
+selectMoviesOrdered:
+SELECT MovieTable.*
+FROM MovieTable
+WHERE parent_id = ?
+ORDER BY order_index ASC;
+
+insertParent:
+INSERT INTO ParentTable (order_index)
+VALUES (?);
+
+insert:
+INSERT INTO MovieTable (id, overview, releaseDate, posterPath, backdropPath, name, voteAverage, voteCount, order_index, parent_id)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+removeAll:
+DELETE FROM ParentTable;
+
+removeAllMovies:
+DELETE FROM MovieTable;

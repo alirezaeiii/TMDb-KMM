@@ -1,21 +1,35 @@
 package org.example.tmdb.domain.repository
 
 import dev.icerock.moko.resources.desc.StringDesc
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.ServerResponseException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import org.example.tmdb.base.BaseRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import okio.IOException
+import org.example.tmdb.cache.Database
 import org.example.tmdb.domain.model.FeedWrapper
 import org.example.tmdb.domain.model.Movie
 import org.example.tmdb.domain.model.SortType
+import org.example.tmdb.utils.Async
 import org.example.tmdb.utils.getDiscoverText
 import org.example.tmdb.utils.getHighestRateText
+import org.example.tmdb.utils.getNetworkFailed
 import org.example.tmdb.utils.getPopularText
+import org.example.tmdb.utils.getRequestFailed
+import org.example.tmdb.utils.getServerFailed
 import org.example.tmdb.utils.getTrendingText
+import org.example.tmdb.utils.getUnexpectedError
 
-abstract class BaseFeedRepository(ioDispatcher: CoroutineDispatcher) :
-    BaseRepository<List<FeedWrapper>>(ioDispatcher) {
+abstract class BaseFeedRepository(
+    private val database: Database,
+    private val ioDispatcher: CoroutineDispatcher
+) {
 
     protected abstract suspend fun popularItems(): List<Movie>
 
@@ -33,7 +47,35 @@ abstract class BaseFeedRepository(ioDispatcher: CoroutineDispatcher) :
 
     protected abstract fun getLatestStringDesc(): StringDesc
 
-    override suspend fun getSuccessResult(id: Any?): List<FeedWrapper> {
+    fun getResult(): Flow<Async<List<FeedWrapper>>> = flow {
+        emit(Async.Loading)
+        try {
+            val dbMovies = database.getAllMovies()
+            if (dbMovies.isEmpty()) {
+                emitUpdatedMovies()
+            } else {
+                emit(Async.Success(getFeedWrappers(database.getAllMovies())))
+                emitUpdatedMovies()
+            }
+        } catch (e: IOException) {
+            emit(Async.Error(getNetworkFailed()))
+        } catch (e: ClientRequestException) {
+            emit(Async.Error(getRequestFailed()))
+        } catch (e: ServerResponseException) {
+            emit(Async.Error(getServerFailed()))
+        } catch (e: Exception) {
+            emit(Async.Error(getUnexpectedError()))
+        }
+    }.flowOn(ioDispatcher)
+
+    private suspend fun FlowCollector<Async.Success<List<FeedWrapper>>>.emitUpdatedMovies() {
+        val movieWrapper = getMoviesFromNetwork()
+        database.clearAndCreateMovies(movieWrapper)
+        val dbMovies = database.getAllMovies()
+        emit(Async.Success(getFeedWrappers(dbMovies)))
+    }
+
+    private suspend fun getMoviesFromNetwork(): List<List<Movie>> {
         val trendingDeferred: Deferred<List<Movie>>
         val nowPlayingDeferred: Deferred<List<Movie>>
         val popularDeferred: Deferred<List<Movie>>
@@ -49,36 +91,45 @@ abstract class BaseFeedRepository(ioDispatcher: CoroutineDispatcher) :
             discoverDeferred = async { discoverItems() }
         }
         return listOf(
-            FeedWrapper(
-                trendingDeferred.await(),
-                getTrendingText(),
-                SortType.TRENDING,
-            ),
-            FeedWrapper(
-                popularDeferred.await(),
-                getPopularText(),
-                SortType.MOST_POPULAR,
-            ),
-            FeedWrapper(
-                nowPlayingDeferred.await(),
-                getNowPlayingStringDesc(),
-                SortType.NOW_PLAYING,
-            ),
-            FeedWrapper(
-                discoverDeferred.await(),
-                getDiscoverText(),
-                SortType.DISCOVER,
-            ),
-            FeedWrapper(
-                latestDeferred.await(),
-                getLatestStringDesc(),
-                SortType.UPCOMING,
-            ),
-            FeedWrapper(
-                topRatedDeferred.await(),
-                getHighestRateText(),
-                SortType.HIGHEST_RATED,
-            ),
+            trendingDeferred.await(),
+            popularDeferred.await(),
+            nowPlayingDeferred.await(),
+            discoverDeferred.await(),
+            latestDeferred.await(),
+            topRatedDeferred.await()
         )
     }
+
+    private fun getFeedWrappers(movieWrapper: List<List<Movie>>) = listOf(
+        FeedWrapper(
+            movieWrapper[0],
+            getTrendingText(),
+            SortType.TRENDING,
+        ),
+        FeedWrapper(
+            movieWrapper[1],
+            getPopularText(),
+            SortType.MOST_POPULAR,
+        ),
+        FeedWrapper(
+            movieWrapper[2],
+            getNowPlayingStringDesc(),
+            SortType.NOW_PLAYING,
+        ),
+        FeedWrapper(
+            movieWrapper[3],
+            getDiscoverText(),
+            SortType.DISCOVER,
+        ),
+        FeedWrapper(
+            movieWrapper[4],
+            getLatestStringDesc(),
+            SortType.UPCOMING,
+        ),
+        FeedWrapper(
+            movieWrapper[5],
+            getHighestRateText(),
+            SortType.HIGHEST_RATED,
+        )
+    )
 }
