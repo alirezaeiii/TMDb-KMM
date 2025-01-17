@@ -23,6 +23,7 @@ ksp = "2.1.0-1.0.29"
 buildKonfig = "0.15.2"
 skie = "0.10.0"
 moko-resources = "0.24.4"
+sqlDelight = "2.0.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -59,6 +60,9 @@ coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 
 moko-resources = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
 
+android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -70,3 +74,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 multiplatformResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources"}
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }

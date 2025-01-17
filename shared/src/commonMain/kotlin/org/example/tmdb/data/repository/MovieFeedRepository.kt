@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineDispatcher
+import org.example.tmdb.cache.Database
 import org.example.tmdb.data.response.TMDbWrapper
 import org.example.tmdb.data.response.asDomainModel
 import org.example.tmdb.domain.repository.BaseFeedRepository
@@ -12,8 +13,9 @@ import org.example.tmdb.utils.getUpcomingText
 
 class MovieFeedRepository(
     private val httpClient: HttpClient,
+    database: Database,
     ioDispatcher: CoroutineDispatcher
-) : BaseFeedRepository(ioDispatcher) {
+) : BaseFeedRepository(database, ioDispatcher) {
 
     override suspend fun popularItems() =
         httpClient.get("movie/popular").body<TMDbWrapper>().items.asDomainModel()

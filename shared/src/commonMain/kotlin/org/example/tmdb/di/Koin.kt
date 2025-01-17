@@ -8,6 +8,7 @@ import org.example.tmdb.data.repository.MovieFeedRepository
 import org.example.tmdb.domain.repository.BaseFeedRepository
 import org.example.tmdb.viewmodel.FeedViewModel
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.KoinAppDeclaration
@@ -22,13 +23,14 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             ktorModule,
             dispatcherModule,
             repositoryModule,
-            viewModelModule
+            viewModelModule,
+            databaseModule()
         )
     }
 }
 
 val repositoryModule = module {
-    single<BaseFeedRepository> { MovieFeedRepository(get(), get(named("io"))) }
+    single<BaseFeedRepository> { MovieFeedRepository(get(), get(), get(named("io"))) }
 }
 
 val viewModelModule = module {
@@ -38,5 +40,7 @@ val viewModelModule = module {
 val dispatcherModule = module {
     single(named("io")) { Dispatchers.IO }
 }
+
+expect fun databaseModule(): Module
 
 fun getFeedViewModel(): FeedViewModel = KoinPlatform.getKoin().get()
