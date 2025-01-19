@@ -50,27 +50,27 @@ abstract class BaseFeedRepository(
 
     fun getResult(): Flow<Async<List<FeedWrapper>>> = flow {
         emit(Async.Loading)
-            val dbMovies = database.getAllMovies()
-            if (dbMovies.isEmpty()) {
-                try {
-                    emitUpdatedMovies()
-                } catch (e: IOException) {
-                    emit(Async.Error(getNetworkFailed()))
-                } catch (e: ClientRequestException) {
-                    emit(Async.Error(getRequestFailed()))
-                } catch (e: ServerResponseException) {
-                    emit(Async.Error(getServerFailed()))
-                } catch (e: Exception) {
-                    emit(Async.Error(getUnexpectedError()))
-                }
-            } else {
-                emit(Async.Success(getFeedWrappers(dbMovies)))
-                try {
-                    emitUpdatedMovies()
-                } catch (t: Throwable) {
-                    Napier.e("Network failed", t)
-                }
+        val dbMovies = database.getAllMovies()
+        if (dbMovies.isEmpty()) {
+            try {
+                emitUpdatedMovies()
+            } catch (e: IOException) {
+                emit(Async.Error(getNetworkFailed()))
+            } catch (e: ClientRequestException) {
+                emit(Async.Error(getRequestFailed()))
+            } catch (e: ServerResponseException) {
+                emit(Async.Error(getServerFailed()))
+            } catch (e: Exception) {
+                emit(Async.Error(getUnexpectedError()))
             }
+        } else {
+            emit(Async.Success(getFeedWrappers(dbMovies)))
+            try {
+                emitUpdatedMovies()
+            } catch (t: Throwable) {
+                Napier.e("Network failed", t)
+            }
+        }
     }.flowOn(ioDispatcher)
 
     private suspend fun FlowCollector<Async.Success<List<FeedWrapper>>>.emitUpdatedMovies() {
