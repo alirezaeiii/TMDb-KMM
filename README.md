@@ -23,6 +23,11 @@ Add your [TMDB](https://www.themoviedb.org/) API key in the `local.properties` f
 TMDB_API_KEY=YOUR_API_KEY
 ```
 
+## Screenshots
+<p float="left">
+  <img src="https://github.com/alirezaeiii/TMDb-KMM/blob/main/screenshots/screenshot1.png" width="250" />
+</p>
+
 ## Libraries
 * [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) - Simplify the development of cross-platform projects and reduce the time spent writing and maintaining the same code for different platforms.
 * [Ktor Client](https://ktor.io/docs/welcome.html) - Ktor includes a multiplatform asynchronous HTTP client, which allows you to make requests and handle responses.
