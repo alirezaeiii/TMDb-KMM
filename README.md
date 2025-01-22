@@ -26,6 +26,7 @@ TMDB_API_KEY=YOUR_API_KEY
 ## Screenshots
 <p float="left">
   <img src="https://github.com/alirezaeiii/TMDb-KMM/blob/main/screenshots/screenshot1.png" width="250" />
+  <img src="https://github.com/alirezaeiii/TMDb-KMM/blob/main/screenshots/screenshot2.png" width="250" />
 </p>
 
 ## Libraries
