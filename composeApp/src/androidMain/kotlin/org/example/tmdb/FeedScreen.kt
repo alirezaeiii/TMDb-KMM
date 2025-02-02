@@ -23,9 +23,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -119,7 +118,7 @@ private fun PagerTMDbItemContainer(item: FeedWrapper, modifier: Modifier = Modif
     ) {
         repeat(pagerState.pageCount) { iteration ->
             val color =
-                if (pagerState.currentPage == iteration) MaterialTheme.colors.primary else Teal200
+                if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else Teal200
             Box(
                 modifier =
                 Modifier
@@ -204,7 +203,7 @@ private fun Header(title: String, modifier: Modifier = Modifier) {
         Text(
             text = title,
             maxLines = 1,
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier =
             Modifier
                 .weight(1f)
@@ -212,7 +211,7 @@ private fun Header(title: String, modifier: Modifier = Modifier) {
         )
         Text(
             text = getMoreItemText(),
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier =
             Modifier
                 .align(Alignment.CenterVertically)
@@ -261,7 +260,7 @@ fun TMDbCard(
             Text(
                 text = movie.name,
                 fontSize = 11.sp,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,

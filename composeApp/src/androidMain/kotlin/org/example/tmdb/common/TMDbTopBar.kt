@@ -1,10 +1,9 @@
 package org.example.tmdb.common
 
 import androidx.compose.foundation.layout.PaddingValues
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -36,14 +35,14 @@ private fun CenterAlignedTopBar(
 ) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colors.background,
-            scrolledContainerColor = MaterialTheme.colors.background
+            containerColor = MaterialTheme.colorScheme.background,
+            scrolledContainerColor = MaterialTheme.colorScheme.background
         ),
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onSurface
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface
             )
         },
         navigationIcon = {
