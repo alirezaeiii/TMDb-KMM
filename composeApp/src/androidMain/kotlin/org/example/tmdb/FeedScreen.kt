@@ -237,7 +237,7 @@ private fun Feeds(feeds: List<Movie>, index: Int, modifier: Modifier = Modifier)
 }
 
 @Composable
-fun TMDbCard(
+private fun TMDbCard(
     movie: Movie,
     imageUrl: String?,
     itemWidth: Dp
